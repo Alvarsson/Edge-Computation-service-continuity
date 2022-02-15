@@ -1,0 +1,20 @@
+1# get all pods in my namespace 
+kubectl get pods -n thesis-edge-ho-ns  
+
+2# apply deployment config to kubernetes cluster
+kubectl apply -f <deployment_config.yaml> -n thesis-edge-ho-ns
+
+3# delete all pods and services in my namespace
+kubectl -n thesis-edge-ho-ns delete pod,svc --all 
+
+4# get all services in my namespace
+kubectl get services -n thesis-edge-ho-ns 
+
+5# access container of nodePort service (get name from get pod cmd 1)
+kubectl exec -n thesis-edge-ho-ns --stdin --tty <service_NAME> -- /bin/bash
+
+6# install curl in pod as to prod pod network
+apt-get update
+apt-get install curl
+
+

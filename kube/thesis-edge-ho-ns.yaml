@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: thesis-edge-ho-ns 
+  annotations:
+    field.cattle.io/projectId: c-tmfxj:p-smc4w 
+

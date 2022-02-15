@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inferenceserver-deployment 
+  labels:
+    app: inferenceserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inferenceserver
+  template:
+    metadata:
+      labels:
+        app: inferenceserver
+    spec:
+      containers:
+      - name: inferenceserver
+        image: registry.ice.ri.se/iceedge/inferenceserver 
+        ports:
+        - containerPort: 8554
+        resources:
+          requests:
+            memory: "16Gi"
+            cpu: "10000m"
+            nvidia.com/gpu: 1
+          limits:
+            memory: "16Gi"
+            cpu: "10000m"
+            nvidia.com/gpu: 1
+        command:
+            - "python3"
+            - "/sdk/examples/helloworld/helloworld_server.py"
+        env:
+        - name: VIDEOTEST
+          value: "false"
+        - name: RTSP_PORT
+          value: "8554"
+        - name: UDP_PORT
+          value: "9000"
+        - name: CODEC
+          value: "H264"
+        - name: WIDTH
+          value: "1280"
+        - name: HEIGHT
+          value: "720"
+        - name: FPS
+          value: "30"
+        - name: DEBUG
+          value: "true"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inferenceserver-service 
+spec:
+  type: NodePort
+  selector:
+    app: inferenceserver
+  ports:
+    - name: rtsp
+      protocol: TCP
+      port: 8554
+      targetPort: 8554
+      nodePort: 31020
+    - name: rtp
+      protocol: UDP 
+      port: 9000 
+      targetPort: 9000
+      nodePort: 31021
