@@ -18,3 +18,11 @@ apt-get update
 apt-get install curl
 
 
+7# Procedure to migrate a pod and its content
+  1. Remove all pods and applications on k8s
+  2. 2#
+  3. kubebctl get deployments -n thesis-edge-ho-ns
+  4. kubectl get deployment edge1 -o yaml > time-test-node6.yaml -n thesis-edge-ho-ns
+  5. edit the new yaml file to have new node affinity
+  6. 2# with new deployment yaml file
+

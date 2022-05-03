@@ -20,7 +20,7 @@ def index():
             while True: 
                 now = datetime.now().time() # time object
 
-                print("now =", now)
+                #print("now =", now)
                 next = read_next(i)
                 # new below
                 computed = do_calculation(int(next[1]))

@@ -1,0 +1,25 @@
+# simple dockerfile for python based program.
+FROM python:3.8-slim-buster
+
+
+WORKDIR /src
+COPY build_time.sh /build_time.sh
+RUN ["touch", "file.txt"]
+RUN ["touch", "start_time.txt"]
+RUN ["chmod", "+x", "/build_time.sh"]
+RUN ["sh", "/build_time.sh"]
+RUN apt update -y
+COPY requirements.txt requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+RUN apt-get install bc -y
+RUN apt-get install netcat -y 
+
+
+COPY . .
+
+COPY time.sh /time.sh
+ENV FLASK_APP=main.py
+EXPOSE 5000
+
+#CMD [ "python", "-m" , "flask", "run", "--host=0.0.0.0"]
+ENTRYPOINT ["/time.sh"]
